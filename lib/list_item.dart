@@ -4,8 +4,13 @@ import 'package:mod10_assignment/edit_bottom_sheet.dart';
 class ListItem extends StatelessWidget {
   final Map<String, dynamic> item;
   final Function(Map<String, dynamic>) updateItemCallback;
+  final VoidCallback onDelete;
 
-  ListItem({required this.item, required this.updateItemCallback});
+  ListItem({
+    required this.item,
+    required this.updateItemCallback,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,20 +50,26 @@ class ListItem extends StatelessWidget {
         return AlertDialog(
           title: Text("Options"),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Close the dialog
-                showEditBottomSheet(context, item, updateItemCallback);
-              },
-              child: Text("Edit"),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    showEditBottomSheet(context, item, updateItemCallback);
+                  },
+                  child: Text("Edit"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    onDelete(); // Call the onDelete callback
+                  },
+                  child: Text("Delete"),
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Close the dialog
-                //TODO: add delete logic here
-              },
-              child: Text("Delete"),
-            ),
+            Spacer(),
           ],
         );
       },
