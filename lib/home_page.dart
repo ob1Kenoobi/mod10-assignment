@@ -16,10 +16,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter List App'),
+        leading: const Icon(Icons.account_circle_rounded),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               // Handle search action
             },
@@ -33,24 +33,31 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             TextField(
               controller: titleController,
-              decoration: InputDecoration(labelText: 'Add Title'),
+              decoration: const InputDecoration(labelText: 'Add Title'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: descriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
+              decoration: const InputDecoration(labelText: 'Add Description'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Align(
               alignment: Alignment.center,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepOrange,
+                  textStyle: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 onPressed: () {
                   addItemToList();
                 },
-                child: Text('Add to List'),
+                child: const Text('Add'),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
                 itemCount: itemList.length,
@@ -66,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           deleteItemFromList(index);
                         },
                       ),
-                      Divider(),
+                      const Divider(),
                     ],
                   );
                 },
@@ -79,16 +86,39 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void addItemToList() {
-    setState(() {
-      itemList.add({
-        'title': titleController.text,
-        'description': descriptionController.text,
-      });
+    // Check if both title and description are not empty
+    if (titleController.text.trim().isNotEmpty &&
+        descriptionController.text.trim().isNotEmpty) {
+      setState(() {
+        itemList.add({
+          'title': titleController.text,
+          'description': descriptionController.text,
+        });
 
-      // Clear text fields after adding to the list
-      titleController.clear();
-      descriptionController.clear();
-    });
+        // Clear text fields after adding to the list
+        titleController.clear();
+        descriptionController.clear();
+      });
+    } else {
+      // Show an alert or a message indicating that both fields are required
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Error"),
+            content: const Text("Both title and description are required."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   void updateItemInList(int index, Map<String, dynamic> updatedItem) {

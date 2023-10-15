@@ -6,7 +6,7 @@ class ListItem extends StatelessWidget {
   final Function(Map<String, dynamic>) updateItemCallback;
   final VoidCallback onDelete;
 
-  ListItem({
+  const ListItem({
     required this.item,
     required this.updateItemCallback,
     required this.onDelete,
@@ -16,7 +16,7 @@ class ListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // Define a color for the list item based on its index
     Color itemColor =
-        Colors.blue; // You can change this color to your preference
+        Colors.deepOrangeAccent; // You can change this color to your preference
 
     return Container(
       color: itemColor,
@@ -29,16 +29,23 @@ class ListItem extends StatelessWidget {
         ),
         title: Text(
           item['title'],
-          style: TextStyle(
-              color: Colors
-                  .white), // Set text color to white for better visibility
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ), // Set text color to white for better visibility
         ),
         subtitle: Text(
           item['description'],
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+          ),
         ),
-        trailing: Icon(Icons.arrow_forward_ios,
-            color: Colors.white), // Add a trailing arrow icon
+        trailing: const Icon(
+          Icons.arrow_right_alt_outlined,
+          color: Colors.white,
+        ), // Add a trailing arrow icon
       ),
     );
   }
@@ -48,7 +55,7 @@ class ListItem extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Options"),
+          title: const Text("Options"),
           actions: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,18 +65,18 @@ class ListItem extends StatelessWidget {
                     Navigator.pop(context);
                     showEditBottomSheet(context, item, updateItemCallback);
                   },
-                  child: Text("Edit"),
+                  child: const Text("Edit"),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                     onDelete(); // Call the onDelete callback
                   },
-                  child: Text("Delete"),
+                  child: const Text("Delete"),
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
           ],
         );
       },

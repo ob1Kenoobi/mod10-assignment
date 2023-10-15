@@ -13,20 +13,21 @@ void showEditBottomSheet(BuildContext context, Map<String, dynamic> item,
       return ListView(
         children: [
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: titleController,
-                  decoration: InputDecoration(labelText: 'Edit Title'),
+                  decoration: const InputDecoration(labelText: 'Edit Title'),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 TextField(
                   controller: descriptionController,
-                  decoration: InputDecoration(labelText: 'Edit Description'),
+                  decoration:
+                      const InputDecoration(labelText: 'Edit Description'),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     // Update the item with the new values
@@ -38,7 +39,7 @@ void showEditBottomSheet(BuildContext context, Map<String, dynamic> item,
 
                     Navigator.pop(context); // Close the bottom sheet
                   },
-                  child: Text('Save'),
+                  child: const Text('Save'),
                 ),
               ],
             ),
