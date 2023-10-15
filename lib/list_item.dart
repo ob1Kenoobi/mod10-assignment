@@ -1,5 +1,3 @@
-// list_item.dart
-
 import 'package:flutter/material.dart';
 
 class ListItem extends StatelessWidget {
@@ -16,6 +14,9 @@ class ListItem extends StatelessWidget {
     return Container(
       color: itemColor,
       child: ListTile(
+        onLongPress: () {
+          showOptionsDialog(context);
+        },
         leading: CircleAvatar(
           child: Text(item['title'][0]), // Display first letter of the title
         ),
@@ -29,7 +30,36 @@ class ListItem extends StatelessWidget {
           item['description'],
           style: TextStyle(color: Colors.white),
         ),
+        trailing: Icon(Icons.arrow_forward_ios,
+            color: Colors.white), // Add a trailing arrow icon
       ),
+    );
+  }
+
+  void showOptionsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Options"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+                // Add your edit logic here
+              },
+              child: Text("Edit"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+                // Add your delete logic here
+              },
+              child: Text("Delete"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
