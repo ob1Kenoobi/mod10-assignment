@@ -55,11 +55,19 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListView.builder(
                 itemCount: itemList.length,
                 itemBuilder: (context, index) {
-                  return ListItem(
-                    item: itemList[index],
-                    updateItemCallback: (updatedItem) {
-                      updateItemInList(index, updatedItem);
-                    },
+                  return Column(
+                    children: [
+                      ListItem(
+                        item: itemList[index],
+                        updateItemCallback: (updatedItem) {
+                          updateItemInList(index, updatedItem);
+                        },
+                        onDelete: () {
+                          deleteItemFromList(index);
+                        },
+                      ),
+                      Divider(),
+                    ],
                   );
                 },
               ),
@@ -86,6 +94,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void updateItemInList(int index, Map<String, dynamic> updatedItem) {
     setState(() {
       itemList[index] = updatedItem;
+    });
+  }
+
+  void deleteItemFromList(int index) {
+    setState(() {
+      itemList.removeAt(index);
     });
   }
 }
