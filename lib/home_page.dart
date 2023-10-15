@@ -16,7 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //title: Text('Flutter List App'),
+        title: Text('Flutter List App'),
         actions: [
           IconButton(
             icon: Icon(Icons.search),
@@ -55,11 +55,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListView.builder(
                 itemCount: itemList.length,
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      ListItem(item: itemList[index]),
-                      Divider(), // Add a Divider between each ListItem
-                    ],
+                  return ListItem(
+                    item: itemList[index],
+                    updateItemCallback: (updatedItem) {
+                      updateItemInList(index, updatedItem);
+                    },
                   );
                 },
               ),
@@ -80,6 +80,12 @@ class _MyHomePageState extends State<MyHomePage> {
       // Clear text fields after adding to the list
       titleController.clear();
       descriptionController.clear();
+    });
+  }
+
+  void updateItemInList(int index, Map<String, dynamic> updatedItem) {
+    setState(() {
+      itemList[index] = updatedItem;
     });
   }
 }
