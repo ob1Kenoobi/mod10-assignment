@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mod10_assignment/edit_bottom_sheet.dart';
 
 class ListItem extends StatelessWidget {
   final Map<String, dynamic> item;
+  final Function(Map<String, dynamic>) updateItemCallback;
 
-  ListItem({required this.item});
+  ListItem({required this.item, required this.updateItemCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +48,14 @@ class ListItem extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
-                //TODO: Add edit logic here
+                showEditBottomSheet(context, item, updateItemCallback);
               },
               child: Text("Edit"),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
-                //TODO: Add delete logic here
+                //TODO: add delete logic here
               },
               child: Text("Delete"),
             ),
